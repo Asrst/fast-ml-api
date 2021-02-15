@@ -1,0 +1,6 @@
+fastapi
+scikit-learn==0.23.2
+joblib==1.0.0
+uvicorn
+locust
+gunicorn
