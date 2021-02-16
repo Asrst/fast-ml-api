@@ -4,3 +4,4 @@ joblib==1.0.0
 uvicorn
 locust
 gunicorn
+jupyter

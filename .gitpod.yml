@@ -1,14 +1,12 @@
 image:
   file: .gitpod.Dockerfile
 
-workspaceLocation: "."
+# workspaceLocation: "."
 
 # This will expose all necessary ports needed for your VNC image
 ports:
   - port: 5080
     onOpen: open-preview
-  - port: 6379
-    onOpen: ignore
   - port: 8000
     onOpen: ignore
   - port: 8080
@@ -16,8 +14,13 @@ ports:
 
 # This will make it so that on workspace start it will run a file called `app.py`
 tasks:
-  - init: pip3 install -r requirements.txt
-  - command: find ./ -iname "*.sh" -exec chmod +x {} +
+  - before: find ./ -iname "*.sh" -exec chmod +x {} +
+    init: ./run.sh
+    command: python --version
+  - command: |
+      cp -r .jupyter /home/gitpod/
+      python tests/api_test.py
+      uvicorn project_api.main:app
 
 vscode:
   extensions:

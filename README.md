@@ -1,20 +1,29 @@
-#### Fast-ML-API 
+#### Fast-ML-API
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Asrst/fast-ml-api)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Asrst/fast-ml-api)
 
-
-- Sklearn ML model serving template using Fast API and Docker
+- ML model inference serving template using Fast API and Docker
 
 #### Other Features to consider
+- Using `ujson` or `rjson`.
 - Token Auth.
 - Exception Handling.
-- Versioning of APIs/Routes.
+- Model Versioning with APIRoute.
 - Message Broker to support Request Batching.
 
 # Instructions
 
-### 1. Build the docker image & Run the container
+### 1. Clone the repository OR Use Docker
+#### manually
+```
+cd fast-ml-api
+bash run.sh
+python tests/api_test.py
+uvicorn project_api.main:app
+```
+(OR)
 
+#### build the docker-image & run the container
 ```
 bash deploy.sh
 ```

@@ -13,7 +13,7 @@ class SklearnPredict(TaskSet):
     def predict(self):
         X, y = datasets.make_classification(n_samples=1000, n_features=10)
         request_body = {"inputs": X.tolist()}
-        self.client.post('/sklearn-model/predict', json=request_body)
+        self.client.post('/sklearn-gnb/predict', json=request_body)
 
     # @tag('healthcheck')
     # @task

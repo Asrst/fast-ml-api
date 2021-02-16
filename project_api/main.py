@@ -1,4 +1,9 @@
 import os, sys
+from pathlib import Path
+file_path = Path(__file__).resolve()
+sys.path.append(str(file_path.parent))
+# print(file_path.parent, file_path.root)
+
 import traceback
 from enum import Enum
 from fastapi import FastAPI, Body
@@ -10,20 +15,23 @@ from models.loader import load_sklearn_joblib_model
 
 
 app = FastAPI(title = 'fast-ml-api')
-sklearn_model = load_sklearn_joblib_model('../models_store/NB.joblib')
+
+file_root = file_path.parents[1]
+model_store = os.path.join(file_root, 'models_store')
+gnb_model = load_sklearn_joblib_model(f"{model_store}/NB.joblib")
 
 @app.get("/")
 async def health_check():
     return {"message": "Hello World"}
 
 
-@app.post("/sklearn-model/predict", response_model=PredictionResponse)
+@app.post("/sklearn-gnb/predict", response_model=PredictionResponse)
 async def make_prediction(inputs: List[List[float]] = Body(..., embed=True)):
 
     result_json = {'status_code': 500, 'predictions': [],
                     'errorMessage': ''}
     try:
-        preds = await predict_async(model=sklearn_model, X=inputs)
+        preds = await predict_async(model=gnb_model, X=inputs)
         # preds = joblib_predict(sklearn_model, inputs)
         result_json['predictions'] = preds
         result_json['status_code'] = 200
